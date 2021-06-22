@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+task copyTask(type: Copy) {
+    from 'apk/test.apk'
+    into 'build/outputs/apk'
+    rename { String fileName ->
+        fileName = "app-debug.apk"
+    }
+}
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    defaultConfig {
+        applicationId "com.test.aaa"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "auto.basic.InstrumentationTestRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.0'
+    androidTestCompile 'com.android.support:support-annotations:26.+'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+    compile files('libs/commons-codec-1.9.jar')
+    compile files('libs/commons-logging-1.2.jar')
+    compile files('libs/gson-2.5.jar')
+    compile files('libs/jna-4.1.0.jar')
+    compile files('libs/jna-platform-4.1.0.jar')
+    compile files('libs/json-lib-2.1-jdk13.jar')
+    compile files('libs/okhttp-3.4.1.jar')
+    compile files('libs/apahttp/fluent-hc-4.5.jar')
+    compile files('libs/apahttp/httpclient-4.5.jar')
+    compile files('libs/apahttp/httpclient-cache-4.5.jar')
+    compile files('libs/apahttp/httpclient-win-4.5.jar')
+    compile files('libs/apahttp/httpcore-4.4.1.jar')
+    compile files('libs/apahttp/httpmime-4.5.jar')
+}
